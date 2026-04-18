@@ -1,0 +1,289 @@
+/* ===================== GLOBAL ===================== */
+* {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  color: #f1f5f9;
+  overflow-x: hidden;
+}
+
+/* ===================== DASHBOARD BACKGROUND ===================== */
+.dashboard-page {
+  min-height: 100vh;
+  background: radial-gradient(circle at top right, #1e0f3e, transparent 60%),
+              radial-gradient(circle at bottom left, #0f1e3e, transparent 60%),
+              #0f0f1a;
+}
+
+/* ===================== DASHBOARD CONTAINER ===================== */
+.dashboard-container {
+  max-width: 1200px;
+  margin: 60px auto 80px;
+  background: rgba(26, 26, 46, 0.95);
+  border-radius: 22px;
+  padding: 50px;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+/* ===================== HEADER ===================== */
+h2.text-center {
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 2.6rem;
+  color: #7c3aed;
+}
+
+/* ===================== SEARCH & FILTER ===================== */
+.search-box {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 28px;
+  position: relative;
+}
+
+.search-box input {
+  width: 300px;
+  padding: 12px 14px 12px 40px;
+  font-size: 15px;
+  border-radius: 999px;
+  border: 1px solid #2d2d4e;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.search-box input:focus {
+  border-color: #8b5cf6;
+  box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.18);
+}
+
+.search-box::before {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+}
+
+.search-box select {
+  border-radius: 999px;
+  padding: 12px 18px;
+  border: 1px solid #ddd;
+  background: #f1f5f9;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.search-box select:focus {
+  border-color: #8b5cf6;
+  box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.18);
+}
+
+/* ===================== NO DATA ===================== */
+.no-data {
+  text-align: center;
+  color: #94a3b8;
+  font-style: italic;
+  margin-top: 20px;
+}
+
+/* ===================== STATS GRID ===================== */
+.stats-grid.fancy {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 22px;
+  margin-top: 24px;
+}
+
+.stat-card {
+  position: relative;
+  border-radius: 18px;
+  padding: 26px 22px;
+  color: white;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.18);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  overflow: hidden;
+}
+
+.stat-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 28px 60px rgba(0, 0, 0, 0.28);
+}
+
+.stat-value {
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.stat-label {
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.stat-trend {
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+/* Gradient themes */
+.gradient-0 { background: linear-gradient(135deg, #8b5cf6, #a78bfa); }
+.gradient-1 { background: linear-gradient(135deg, #ec4899, #f472b6); }
+.gradient-2 { background: linear-gradient(135deg, #6366f1, #818cf8); }
+.gradient-3 { background: linear-gradient(135deg, #7c3aed, #c084fc); }
+
+/* Decorative bubble */
+.stat-card::after {
+  content: "";
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+  top: -30px;
+  right: -30px;
+}
+
+/* ===================== TABLE ===================== */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  margin-top: 16px;
+}
+
+thead th {
+  background: #f1f5f9;
+  padding: 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #334155;
+}
+
+tbody tr {
+  background: #1a1a2e;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+tbody tr:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+}
+
+tbody td {
+  padding: 14px;
+  font-size: 14px;
+  color: #1e293b;
+  text-align: center;
+}
+
+/* Buttons */
+table button {
+  background: linear-gradient(135deg, #8b5cf6, #ec4899);
+  border: none;
+  color: white;
+  padding: 6px 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+table button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(139, 92, 246, 0.35);
+}
+
+/* Progress bars */
+.progress-bar {
+  background: #e5e7eb;
+  border-radius: 12px;
+  height: 12px;
+  overflow: hidden;
+  margin: 4px 0;
+}
+
+.progress-bar.small {
+  height: 10px;
+}
+
+.progress-bar .fill {
+  height: 100%;
+  border-radius: 12px;
+  transition: width 0.4s ease;
+}
+
+.fill.success { background: #34d399; }
+.fill.warning { background: #fbbf24; }
+.fill.danger { background: #f87171; }
+
+/* Badges */
+.badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 12px;
+  display: inline-block;
+}
+
+.badge.success { background: #34d399; color: #065f46; }
+.badge.warning { background: #fbbf24; color: #78350f; }
+.badge.danger  { background: #f87171; color: #7f1d1d; }
+
+/* ===================== TABS ===================== */
+.dashboard-tabs {
+  overflow: hidden;
+  width: 100%;
+  margin: 28px 0;
+  position: relative;
+}
+
+.dashboard-tabs-track {
+  display: flex;
+  gap: 20px;
+  width: max-content;
+  animation: scrollTabs 18s linear infinite;
+}
+
+.dashboard-tabs:hover .dashboard-tabs-track {
+  animation-play-state: paused;
+}
+
+@keyframes scrollTabs {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.dashboard-tabs-track button {
+  background: #f1f5f9;
+  color: #334155;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+}
+
+.dashboard-tabs-track button:hover {
+  background: linear-gradient(135deg, #8b5cf6, #ec4899);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(139, 92, 246, 0.35);
+}
+
+.dashboard-tabs-track button.active {
+  border-bottom: 3px solid #ec4899;
+  font-weight: 600;
+}

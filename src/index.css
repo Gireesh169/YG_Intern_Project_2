@@ -1,0 +1,313 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Default (dark) body ── */
+body {
+  background-color: #0b0f19;
+  color: #e5e7eb;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+/* ── Light theme body override ── */
+[data-theme="light"] body {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+/* ── Dark theme variables ── */
+:root,
+:root[data-theme="dark"] {
+  --bg-primary: #0b0f19;
+  --bg-secondary: #0f172a;
+  --bg-card: #111827;
+  --border: #1f2937;
+  --text-primary: #e5e7eb;
+  --text-secondary: #9ca3af;
+  --text-muted: #6b7280;
+}
+
+/* ── Light theme variables ── */
+:root[data-theme="light"] {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #f1f5f9;
+  --bg-card: #ffffff;
+  --border: #e2e8f0;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+}
+
+/* ══════════════════════════════════════
+   LIGHT THEME — Tailwind class overrides
+══════════════════════════════════════ */
+
+/* Backgrounds */
+[data-theme="light"] .bg-\[\#0B0F19\],
+[data-theme="light"] .bg-\[\#0b0f19\],
+[data-theme="light"] .bg-\[\#0f0f1a\],
+[data-theme="light"] .bg-\[\#0F172A\],
+[data-theme="light"] .bg-\[\#0f172a\] {
+  background-color: #f8fafc !important;
+}
+
+[data-theme="light"] .bg-\[\#111827\],
+[data-theme="light"] .bg-\[\#111827\]\/80 {
+  background-color: #ffffff !important;
+}
+
+[data-theme="light"] .bg-\[\#1F2937\],
+[data-theme="light"] .bg-\[\#1f2937\] {
+  background-color: #e2e8f0 !important;
+}
+
+[data-theme="light"] .bg-\[\#0B0F19\]\/90,
+[data-theme="light"] .bg-\[\#0B0F19\]\/70,
+[data-theme="light"] .bg-\[\#0B0F19\]\/95 {
+  background-color: rgba(248, 250, 252, 0.95) !important;
+}
+
+/* Text */
+[data-theme="light"] .text-\[\#E5E7EB\] {
+  color: #0f172a !important;
+}
+[data-theme="light"] .text-\[\#9CA3AF\] {
+  color: #475569 !important;
+}
+[data-theme="light"] .text-\[\#6B7280\] {
+  color: #64748b !important;
+}
+
+/* Borders */
+[data-theme="light"] .border-\[\#1F2937\] {
+  border-color: #e2e8f0 !important;
+}
+[data-theme="light"] .border-\[\#374151\] {
+  border-color: #cbd5e1 !important;
+}
+
+/* Hover states */
+[data-theme="light"] .hover\:bg-\[\#1F2937\]:hover {
+  background-color: #f1f5f9 !important;
+}
+[data-theme="light"] .hover\:bg-\[\#111827\]:hover {
+  background-color: #f8fafc !important;
+}
+
+/* Dot grid — lighter dots in light mode */
+[data-theme="light"] .bg-grid {
+  background-image: radial-gradient(
+    circle,
+    #e2e8f0 1px,
+    transparent 1px
+  ) !important;
+}
+
+/* Navbar */
+[data-theme="light"] header {
+  background-color: rgba(248, 250, 252, 0.9) !important;
+  border-bottom-color: #e2e8f0 !important;
+}
+
+/* Cards hover border */
+[data-theme="light"] .hover\:border-indigo-500\/40:hover {
+  border-color: rgba(99, 102, 241, 0.4) !important;
+}
+
+/* ══════════════════════════════════════
+   ANIMATIONS
+══════════════════════════════════════ */
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+.animate-slideInRight {
+  animation: slideInRight 0.3s ease-out;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-10px);
+  }
+  40% {
+    transform: translateX(10px);
+  }
+  60% {
+    transform: translateX(-10px);
+  }
+  80% {
+    transform: translateX(10px);
+  }
+}
+.animate-shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+.animate-pulse-glow {
+  animation: pulse-glow 2.5s ease-in-out infinite;
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.animate-spin-slow {
+  animation: spin-slow 12s linear infinite;
+}
+
+/* ══════════════════════════════════════
+   CONCEPT CONTENT (Quiz tables)
+══════════════════════════════════════ */
+
+.concept-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+  background: #111827;
+}
+
+[data-theme="light"] .concept-content table {
+  background: #ffffff;
+}
+
+.concept-content th,
+.concept-content td {
+  border: 1px solid #1f2937;
+  padding: 8px 10px;
+  text-align: left;
+  vertical-align: top;
+  font-size: 14px;
+  color: #e5e7eb;
+}
+
+[data-theme="light"] .concept-content th,
+[data-theme="light"] .concept-content td {
+  border-color: #e2e8f0;
+  color: #0f172a;
+}
+
+.concept-content th {
+  background-color: #0f172a;
+  font-weight: 600;
+  color: #6366f1;
+}
+
+[data-theme="light"] .concept-content th {
+  background-color: #f1f5f9;
+  color: #4f46e5;
+}
+
+.concept-content tr:nth-child(even) td {
+  background-color: #0f172a;
+}
+
+[data-theme="light"] .concept-content tr:nth-child(even) td {
+  background-color: #f8fafc;
+}
+
+/* ══════════════════════════════════════
+   SCROLLBAR
+══════════════════════════════════════ */
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+
+
+/* ══════════════════════════════════════
+   GLOBAL HIGH-VISIBILITY OVERRIDES
+   Fixes "Invisible Text" in Dark Mode
+══════════════════════════════════════ */
+
+[data-theme="dark"] {
+  /* Force specific hard-coded Tailwind hex codes to brighter colors */
+  
+  /* Target: Mid-grey descriptions (#6B7280) */
+  .text-\[#6B7280\], 
+  .text-slate-500,
+  .text-gray-500 {
+    color: #cbd5e1 !important; /* Lighter Slate-300 */
+  }
+
+  /* Target: Light-grey subheadings (#9CA3AF) */
+  .text-\[#9CA3AF\],
+  .text-slate-400,
+  .text-gray-400 {
+    color: #f1f5f9 !important; /* Near white */
+  }
+
+  /* Target: Darker grey labels used in highlights */
+  .text-slate-600,
+  .text-gray-600 {
+    color: #94a3b8 !important; /* Slate-400 */
+  }
+
+  /* Specific fix for Dashboard Stat Cards labels */
+  .stats-label, 
+  .highlight-text,
+  p.text-sm {
+    color: #cbd5e1 !important;
+  }
+}
+
+/* Premium Gen-Z Glow Background (Replaces dots) */
+body {
+  background-attachment: fixed;
+}
+
+[data-theme="dark"] body {
+  background-color: #0b0f19;
+  background-image: radial-gradient(circle at 50% -20%, #1e1b4b 0%, #0b0f19 80%);
+}
+
+
+/* Change this to a "Cooler" Navy */
+[data-theme="dark"] body {
+  background-color: #0b0f19;
+  /* Old was likely 1e1b4b (Indigo/Purple) -> New is 0f172a (Deep Navy) */
+  background-image: radial-gradient(circle at 50% -20%, #0f172a 0%, #0b0f19 80%) !important;
+}

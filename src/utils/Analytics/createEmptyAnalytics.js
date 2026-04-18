@@ -1,0 +1,33 @@
+export function createEmptyAnalytics() {
+  return {
+    stats: {
+      totalTimeSpent: 0,
+      totalUniqueQuestions: 0,
+      totalCorrect: 0,
+      totalIncorrect: 0,
+      attendedTotal: 0,
+      totalUniqueAttended: 0,
+      avgTime: 0,
+      avgTimeUnique: 0,
+      averageScore: 0,
+      finalAccuracy: 0,
+      coverage: 0,
+      mastery: 0,
+      bestScore: 0,
+      coverageBySubject: {},
+      totalCorrectUnique: 0,
+      totalIncorrectUnique: 0,
+    },
+    byDate: {},
+    bySubmodule: {},
+    byModule: {},
+    bySubject: {},
+    byGrade: {},
+    questionClassification: { important: [], ok: [], bad: [], common: [] },
+    timeline: [],
+    activity: [],
+    subjects: [],
+    modules: [],
+    raw: {},
+  };
+}

@@ -1,0 +1,92 @@
+Rules for Admin Bulk Upload
+
+JSON Upload
+•	Used when NO images are involved
+•	Only a single .json file is uploaded
+
+ZIP Upload
+•	Used when ANY question contains images
+•	ZIP structure:
+upload.zip
+├ questions.json
+ └ images/
+    ├ img1.jpeg
+    ├ img2.jpeg
+     └ …..
+
+Root Level Mandatory Fields
+  "grade": "9",
+  "subject": "Science",
+  "textbookRef": "Physics",
+  "chapterNumber": 3,
+  "chapterName": "Test 30",
+
+Mandatory Fields per Question
+•	questionType
+•	difficulty
+•	questionText
+
+Optional Fields (Grouped)
+If you provide one field from a group, you must provide ALL fields in that group.
+
+1. Explanation Group (Optional)
+•	sourceTextbookUrl
+•	pageNumber
+•	explanation
+
+2. Passage Group (Optional)
+•	passageId
+•	passageTitle
+•	passageText
+
+3. Image Group (Optional)
+•	imageName (Must match filename in images/ folder if using ZIP)
+•	imageCaption
+
+Other Optional Fields
+•	id (optional unique identifier)
+
+Allowed values
+questionType = [mcq | multi | truefalse | fillblanks | matchfollowing]
+difficulty = [easy | medium | hard]
+
+Question Type Specifications
+
+1.	questionType: "mcq"
+      "options": [
+        { "optionText": "Candela", "isCorrect": true },
+        { "optionText": "Lumen", "isCorrect": false },
+        { "optionText": "Lux", "isCorrect": false },
+        { "optionText": "Watt", "isCorrect": false }
+      ]
+      (Exactly one option must be true)
+
+2.	questionType: "multi"
+      "options": [
+        { "optionText": "Optical fibre" },
+        { "optionText": "Periscope" },
+        { "optionText": "Convex lens" },
+        { "optionText": "Binocular prism" }
+      ],
+      "multi": [
+        "Optical fibre",
+        "Binocular prism"
+      ]
+      (All values in "multi" must exist in "options")
+
+3.	questionType: "truefalse"
+      "questionText": "Indira Point...",
+      "correctAnswer": true
+
+4.	questionType: "fillblanks"
+      "questionText": "The angle between the ______ ray and the ______ is called the angle of incidence.",
+      "blanks": ["incident", "normal"]
+
+5.	questionType: "matchfollowing"
+      "questionText": "Match the optical device to its use.",
+      "leftItems": [ ... ],
+      "rightItems": [ ... ],
+      "correctMappings": [
+        { "leftIndex": 0, "rightIndex": 2 },
+        ...
+      ]

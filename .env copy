@@ -1,0 +1,37 @@
+# API Configuration
+# Replace with your actual backend API URL
+
+# Google OAuth Configuration
+# Get this from Google Cloud Console (https://console.cloud.google.com/)
+
+
+
+
+
+
+
+
+    VITE_GOOGLE_CLIENT_ID=644117188758-oh5eek6tt5vkob559dtitup58s9pmsca.apps.googleusercontent.com
+
+    VITE_SUPABASE_URL=https://fsduhkhywpulkxngrtol.supabase.co
+    VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZzZHVoa2h5d3B1bGt4bmdydG9sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjcxNzA3MDAsImV4cCI6MjA4MjUzMDcwMH0.bq9dyvop9nLNmXZ-2gJR0vt-qSQEfrfQAgPkX_spFG0
+
+    VITE_SUPABASE_EDGE_URL=https://fsduhkhywpulkxngrtol.supabase.co/functions/v1
+
+
+VITE_IMAGE_SUPABASE_URL=https://fsduhkhywpulkxngrtol.supabase.co
+VITE_IMAGE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZzZHVoa2h5d3B1bGt4bmdydG9sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjcxNzA3MDAsImV4cCI6MjA4MjUzMDcwMH0.bq9dyvop9nLNmXZ-2gJR0vt-qSQEfrfQAgPkX_spFG0
+
+
+
+
+
+
+
+
+
+#VITE_IMAGE_SUPABASE_URL=https://qrortelidsdytbnisggu.supabase.co
+#VITE_IMAGE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFyb3J0ZWxpZHNkeXRibmlzZ2d1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU4NDg0NzYsImV4cCI6MjA4MTQyNDQ3Nn0.uZDy7VVJ8LNcfuSM2t8D_udxMYkUmK56_k8l-LcEwbk
+
+# VITE_IMAGE_SUPABASE_URL=https://fsduhkhywpulkxngrtol.supabase.co
+# VITE_IMAGE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZzZHVoa2h5d3B1bGt4bmdydG9sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjcxNzA3MDAsImV4cCI6MjA4MjUzMDcwMH0.bq9dyvop9nLNmXZ-2gJR0vt-qSQEfrfQAgPkX_spFG0

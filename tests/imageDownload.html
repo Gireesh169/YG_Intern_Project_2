@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Supabase Image Signed URL Test</title>
+</head>
+<body>
+  <h1>Supabase Image Signed URL Test</h1>
+  <div id="status" style="margin-bottom: 12px; font-family: sans-serif; color: #333;"></div>
+  <img id="test-image" alt="Question image" style="max-width: 400px; border: 1px solid #ccc;" />
+
+  <script type="module">
+    import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+    const SUPABASE_URL = "https://fsduhkhywpulkxngrtol.supabase.co";
+    const SUPABASE_ANON_KEY =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZzZHVoa2h5d3B1bGt4bmdydG9sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjcxNzA3MDAsImV4cCI6MjA4MjUzMDcwMH0.bq9dyvop9nLNmXZ-2gJR0vt-qSQEfrfQAgPkX_spFG0";
+
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // EXACT path from image_name column
+    const imagePath =
+      "grade/9/subject/TESTING-Subjects/module/MKM Testbook/submodule/20260119 MKM Test Image/concave_mirror_focus__1768849885015.png";
+
+    const statusEl = document.getElementById("status");
+    const imgEl = document.getElementById("test-image");
+
+    async function loadImage() {
+      statusEl.textContent = "Requesting signed URL...";
+
+      const { data, error } = await supabase
+        .storage
+        .from("question-assets")
+        .createSignedUrl(imagePath, 60 * 60); // 1 hour
+
+      if (error) {
+        statusEl.textContent = "Error from createSignedUrl: " + error.message;
+        console.error(error);
+        return;
+      }
+
+      const url = data.signedUrl;
+      statusEl.textContent = "Got signed URL, loading image...";
+      console.log("Signed URL:", url);
+
+      imgEl.src = url;
+      imgEl.onerror = () => {
+        statusEl.textContent = "Image failed to load (signed URL request failed).";
+      };
+      imgEl.onload = () => {
+        statusEl.textContent = "Image loaded successfully via signed URL.";
+      };
+    }
+
+    loadImage();
+  </script>
+</body>
+</html>

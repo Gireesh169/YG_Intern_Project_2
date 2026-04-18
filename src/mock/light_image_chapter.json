@@ -1,0 +1,94 @@
+{
+  "grade": "9",
+  "subject": "Science",
+  "chapterName": "Light – Image Based Questions",
+  "questions": [
+    {
+      "id": "Q1",
+      "questionType": "image_mcq",
+      "category": "application",
+      "difficulty": "easy",
+      "questionText": "Which ray passes through the focal point of a convex lens before emerging parallel?",
+      "imageName": "lens_ray_diagram.jpeg",
+      "imageCaption": "Ray diagram of a convex lens",
+      "options": [
+        { "optionText": "Ray A", "isCorrect": false },
+        { "optionText": "Ray B", "isCorrect": true },
+        { "optionText": "Ray C", "isCorrect": false }
+      ],
+      "explanation": "A ray passing through the focal point of a convex lens emerges parallel to the principal axis."
+    },
+    {
+      "id": "Q2",
+      "questionType": "passage_image",
+      "category": "comprehension",
+      "difficulty": "medium",
+      "questionText": "Why does dispersion occur in a prism?",
+      "passageTitle": "Dispersion of Light",
+      "passageText": "When white light passes through a prism, different colours bend by different amounts because the refractive index of glass depends on wavelength.",
+      "imageName": "prism_dispersion.jpeg",
+      "imageCaption": "Dispersion of white light through a prism",
+      "options": [
+        { "optionText": "Because light is absorbed differently", "isCorrect": false },
+        { "optionText": "Because refractive index depends on wavelength", "isCorrect": true },
+        { "optionText": "Because of surface roughness", "isCorrect": false },
+        { "optionText": "Because of temperature variation", "isCorrect": false }
+      ],
+      "explanation_question": "White light contains multiple wavelengths. When it enters a prism, each wavelength bends differently.",
+  "explanation_answer": "Dispersion occurs because the refractive index of glass depends on wavelength.",
+
+      "explanation": "Dispersion occurs because refractive index varies with wavelength."
+    },
+    {
+      "id": "Q3",
+      "questionType": "image_mcq",
+      "category": "recall",
+      "difficulty": "easy",
+      "questionText": "What type of image is formed by a plane mirror?",
+      "imageName": "plane_mirror_image.jpeg",
+      "imageCaption": "Image formation by a plane mirror",
+      "options": [
+        { "optionText": "Real and inverted", "isCorrect": false },
+        { "optionText": "Virtual and erect", "isCorrect": true },
+        { "optionText": "Real and diminished", "isCorrect": false },
+        { "optionText": "Virtual and inverted", "isCorrect": false }
+      ],
+      "explanation_question": "White light contains multiple wavelengths. When it enters a prism, each wavelength bends differently.",
+  "explanation_answer": "Dispersion occurs because the refractive index of glass depends on wavelength.",
+
+      "explanation": "A plane mirror forms a virtual and erect image."
+    },
+    {
+      "id": "Q4",
+      "questionType": "image_mcq",
+      "category": "analysis",
+      "difficulty": "medium",
+      "questionText": "Where is the principal focus of a concave mirror located?",
+      "imageName": "concave_mirror_focus.jpeg",
+      "imageCaption": "Ray diagram of a concave mirror",
+      "options": [
+        { "optionText": "Behind the mirror", "isCorrect": false },
+        { "optionText": "On the mirror surface", "isCorrect": false },
+        { "optionText": "In front of the mirror", "isCorrect": true },
+        { "optionText": "At infinity", "isCorrect": false }
+      ],
+      "explanation": "The principal focus of a concave mirror lies in front of the mirror."
+    },
+    {
+      "id": "Q5",
+      "questionType": "image_mcq",
+      "category": "application",
+      "difficulty": "medium",
+      "questionText": "What type of image is formed when an object is placed between F and 2F of a convex lens?",
+      "imageName": "convex_lens_object_image.jpeg",
+      "imageCaption": "Object between F and 2F of a convex lens",
+      "options": [
+        { "optionText": "Virtual and erect", "isCorrect": false },
+        { "optionText": "Real, inverted and enlarged", "isCorrect": true },
+        { "optionText": "Real and diminished", "isCorrect": false },
+        { "optionText": "Virtual and diminished", "isCorrect": false }
+      ],
+      "explanation": "The image is real, inverted and enlarged."
+    }
+  ]
+}

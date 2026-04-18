@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Supabase Edge Function Tester</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 30px;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .config-section {
+      padding: 30px;
+      background: #f8f9fa;
+      border-bottom: 1px solid #dee2e6;
+    }
+
+    .endpoint-selector {
+      margin-bottom: 20px;
+      padding: 15px;
+      background: white;
+      border-radius: 8px;
+      border: 2px solid #667eea;
+    }
+
+    .endpoint-selector label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #495057;
+    }
+
+    .endpoint-selector select {
+      width: 100%;
+      padding: 10px;
+      border: 2px solid #dee2e6;
+      border-radius: 6px;
+      font-size: 14px;
+      background: white;
+      cursor: pointer;
+    }
+
+    .endpoint-selector select:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .input-group {
+      margin-bottom: 15px;
+    }
+
+    .input-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 5px;
+      color: #495057;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 10px;
+      border: 2px solid #dee2e6;
+      border-radius: 6px;
+      font-size: 14px;
+      font-family: monospace;
+    }
+
+    .input-group input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .controls {
+      padding: 30px;
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      flex: 1;
+      min-width: 150px;
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-login {
+      background: #4285f4;
+      color: white;
+    }
+
+    .btn-login:hover {
+      background: #357ae8;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(66, 133, 244, 0.4);
+    }
+
+    .btn-fetch {
+      background: #34a853;
+      color: white;
+    }
+
+    .btn-fetch:hover {
+      background: #2d8e47;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(52, 168, 83, 0.4);
+    }
+
+    .btn-clear {
+      background: #ea4335;
+      color: white;
+    }
+
+    .btn-clear:hover {
+      background: #d33828;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(234, 67, 53, 0.4);
+    }
+
+    .btn-copy {
+      background: #fbbc04;
+      color: #333;
+    }
+
+    .btn-copy:hover {
+      background: #f9ab00;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(251, 188, 4, 0.4);
+    }
+
+    .btn-copy.copied {
+      background: #34a853;
+      color: white;
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    .status {
+      padding: 30px;
+      border-bottom: 1px solid #dee2e6;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .status-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      border-radius: 6px;
+      background: #f8f9fa;
+      flex: 1;
+      min-width: 220px;
+    }
+
+    .status-indicator {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #6c757d;
+    }
+
+    .status-indicator.active {
+      background: #34a853;
+      box-shadow: 0 0 8px rgba(52, 168, 83, 0.6);
+    }
+
+    .output {
+      padding: 30px;
+      max-height: 500px;
+      overflow-y: auto;
+      background: #fdfdff;
+    }
+
+    .output-section {
+      margin-bottom: 25px;
+    }
+
+    .output-section h3 {
+      color: #495057;
+      margin-bottom: 15px;
+      font-size: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #667eea;
+    }
+
+    .question-card {
+      background: #f8f9fa;
+      border-left: 4px solid #667eea;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 6px;
+    }
+
+    .question-card .question-number {
+      color: #667eea;
+      font-weight: 700;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .question-card .question-text {
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #212529;
+    }
+
+    .question-card .passage {
+      background: white;
+      padding: 12px;
+      border-radius: 4px;
+      border: 1px solid #dee2e6;
+      margin-top: 10px;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #495057;
+    }
+
+    .no-passage {
+      color: #dc3545;
+      font-style: italic;
+    }
+
+    /* Improved JSON block formatting */
+    .json-output {
+      background: #282c34;
+      color: #abb2bf;
+      padding: 20px;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      white-space: pre;
+      /* preserve indentation */
+      word-break: normal;
+    }
+
+    .json-output code {
+      white-space: inherit;
+    }
+
+    .error {
+      background: #fff5f5;
+      border-left: 4px solid #dc3545;
+      padding: 15px;
+      border-radius: 6px;
+      color: #721c24;
+    }
+
+    .loading {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #667eea;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-right: 8px;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🔧 Supabase Edge Function Tester</h1>
+      <p>Test your edge functions</p>
+    </div>
+
+    <div class="config-section">
+      <div class="endpoint-selector">
+        <label for="endpointSelect">Select Edge Function to Test</label>
+        <select id="endpointSelect">
+          <option value="get_submodule_with_questions">get_submodule_with_questions</option>
+          <option value="auto_quiz">auto_quiz</option>
+          <option value="get_analytics">get_analytics</option>
+          <option value="get_analytics_subModule">get_analytics_subModule</option>
+          <option value="subjects_list_by_grade">subjects_list_by_grade</option>
+          <option value="getCourseDetails">getCourseDetails</option>
+          <option value="get_submodules">get_submodules</option>
+        </select>
+      </div>
+
+      <div class="input-group">
+        <label for="supabaseUrl">Supabase URL</label>
+        <input type="text" id="supabaseUrl" value="https://fsduhkhywpulkxngrtol.supabase.co"
+          placeholder="https://your-project.supabase.co" />
+      </div>
+
+      <div class="input-group">
+        <label for="supabaseKey">Supabase Anon Key</label>
+        <input type="password" id="supabaseKey"
+          value="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZzZHVoa2h5d3B1bGt4bmdydG9sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjcxNzA3MDAsImV4cCI6MjA4MjUzMDcwMH0.bq9dyvop9nLNmXZ-2gJR0vt-qSQEfrfQAgPkX_spFG0"
+          placeholder="Your anon key here" />
+      </div>
+
+      <div id="dynamicInputs"></div>
+    </div>
+
+    <div class="status">
+      <div class="status-item">
+        <div class="status-indicator" id="configStatus"></div>
+        <span>Supabase Client Configured</span>
+      </div>
+      <div class="status-item">
+        <div class="status-indicator" id="authStatus"></div>
+        <span>User Authenticated</span>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button class="btn-login" id="loginBtn">🔐 Login with Google</button>
+      <button class="btn-fetch" id="fetchBtn">📥 Fetch Data</button>
+      <button class="btn-copy" id="copyBtn">📋 Copy JSON</button>
+      <button class="btn-clear" id="clearBtn">🗑️ Clear Output</button>
+    </div>
+
+    <div class="output" id="output">
+      <h3>Request Payload</h3>
+      <pre id="requestPayload"
+        style="background: #f0f0f0; padding: 10px; border-radius: 4px; overflow: auto; max-height: 200px; margin-bottom: 20px;">(Request body will appear here)</pre>
+
+      <h3>Response Output</h3>
+      <pre id="jsonOutput"
+        style="background: #e6fffa; padding: 10px; border-radius: 4px; overflow: auto; max-height: 500px; color: #006666;">
+        Click "Fetch Data" to load data
+      </pre>
+    </div>
+  </div>
+
+  <script>
+    let supabaseClient = null;
+    let lastResult = null;
+
+    const endpointConfigs = {
+      get_submodule_with_questions: {
+        method: 'POST',
+        inputs: [
+          {
+            id: 'submoduleId',
+            label: 'Submodule ID',
+            type: 'text',
+            placeholder: 'Enter submodule ID',
+            default: '7ea5ed06-538c-4829-84a1-72fb5c802e4a'
+          }
+        ],
+        buildRequest: (inputs) => ({
+          body: JSON.stringify({ subModuleId: inputs.submoduleId })
+        })
+      },
+
+      auto_quiz: {
+        method: 'POST',
+        inputs: [
+          {
+            id: 'submodule_ids',
+            label: 'Submodule IDs (comma separated)',
+            type: 'text',
+            placeholder: 'e.g. id1, id2',
+            default: ''
+          }
+        ],
+        buildRequest: (inputs) => ({
+          body: JSON.stringify({
+            subModuleIds: inputs.submodule_ids.split(',').map(s => s.trim()).filter(Boolean)
+          })
+        })
+      },
+
+      get_analytics: {
+        method: 'POST',
+        inputs: [
+          {
+            id: 'googleId',
+            label: 'Google ID (leave empty for current user)',
+            type: 'text',
+            placeholder: 'Optional: Enter Google ID',
+            default: ''
+          },
+          {
+            id: 'range',
+            label: 'Date Range',
+            type: 'select',
+            options: [
+              { value: '14d', label: '14 days' },
+              { value: '30d', label: '30 days' }
+            ],
+            default: '14d'
+          }
+        ],
+        buildRequest: async (inputs) => {
+          let googleId = inputs.googleId;
+
+          if (!googleId) {
+            const {
+              data: { user }
+            } = await supabaseClient.auth.getUser();
+            googleId =
+              user?.user_metadata?.sub ||
+              user?.user_metadata?.provider_id ||
+              user?.email ||
+              user?.id;
+          }
+
+          return {
+            body: JSON.stringify({
+              googleId,
+              range: inputs.range || '14d'
+            })
+          };
+        }
+      },
+
+      // placeholder, alias below
+      get_analytics_subModule: null,
+
+      subjects_list_by_grade: {
+        method: 'GET',
+        inputs: [],
+        buildRequest: () => ({})
+      },
+
+      getCourseDetails: {
+        method: 'GET',
+        inputs: [
+          {
+            id: 'courseName',
+            label: 'Course Name or ID',
+            type: 'text',
+            placeholder: 'Enter course name or ID',
+            default: ''
+          },
+          {
+            id: 'includeDisabled',
+            label: 'Include Disabled',
+            type: 'checkbox',
+            default: false
+          }
+        ],
+        buildRequest: (inputs) => ({
+          queryParams: `courseName=${encodeURIComponent(
+            inputs.courseName
+          )}&includeDisabled=${inputs.includeDisabled}`
+        })
+      },
+
+      get_submodules: {
+        method: 'GET',
+        inputs: [
+          {
+            id: 'moduleId',
+            label: 'Module ID',
+            type: 'text',
+            placeholder: 'Enter module ID',
+            default: ''
+          },
+          {
+            id: 'includeDisabled',
+            label: 'Include Disabled',
+            type: 'checkbox',
+            default: false
+          }
+        ],
+        buildRequest: (inputs) => ({
+          queryParams: `moduleId=${inputs.moduleId}&includeDisabled=${inputs.includeDisabled}`
+        })
+      }
+    };
+
+    // Alias get_analytics_subModule to get_analytics config
+    endpointConfigs.get_analytics_subModule = endpointConfigs.get_analytics;
+
+    window.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('loginBtn').addEventListener('click', login);
+      document.getElementById('fetchBtn').addEventListener('click', fetchData);
+      document.getElementById('copyBtn').addEventListener('click', copyResult);
+      document.getElementById('clearBtn').addEventListener('click', clearOutput);
+      document
+        .getElementById('endpointSelect')
+        .addEventListener('change', updateInputFields);
+
+      updateInputFields();
+    });
+
+    function updateInputFields() {
+      const endpoint = document.getElementById('endpointSelect').value;
+      const config = endpointConfigs[endpoint];
+      const container = document.getElementById('dynamicInputs');
+
+      container.innerHTML = '';
+      if (!config || !config.inputs) return;
+
+      config.inputs.forEach((input) => {
+        const div = document.createElement('div');
+        div.className = 'input-group';
+
+        const label = document.createElement('label');
+        label.setAttribute('for', input.id);
+        label.textContent = input.label;
+
+        let inputElement;
+
+        if (input.type === 'checkbox') {
+          inputElement = document.createElement('input');
+          inputElement.type = 'checkbox';
+          inputElement.id = input.id;
+          inputElement.checked = input.default;
+          inputElement.style.width = 'auto';
+          inputElement.style.marginTop = '5px';
+        } else if (input.type === 'select') {
+          inputElement = document.createElement('select');
+          inputElement.id = input.id;
+
+          input.options.forEach((opt) => {
+            const option = document.createElement('option');
+            option.value = opt.value;
+            option.textContent = opt.label;
+            if (opt.value === input.default) option.selected = true;
+            inputElement.appendChild(option);
+          });
+        } else {
+          inputElement = document.createElement('input');
+          inputElement.type = input.type;
+          inputElement.id = input.id;
+          inputElement.placeholder = input.placeholder;
+          inputElement.value = input.default;
+        }
+
+        div.appendChild(label);
+        div.appendChild(inputElement);
+        container.appendChild(div);
+      });
+    }
+
+    function initSupabase() {
+      const url = document.getElementById('supabaseUrl').value;
+      const key = document.getElementById('supabaseKey').value;
+
+      if (!url || !key) {
+        showError('Please enter Supabase URL and Anon Key');
+        return false;
+      }
+
+      try {
+        supabaseClient = window.supabase.createClient(url, key);
+        updateStatus();
+        return true;
+      } catch (err) {
+        showError('Failed to initialize Supabase: ' + err.message);
+        return false;
+      }
+    }
+
+    async function updateStatus() {
+      const configStatus = document.getElementById('configStatus');
+      const authStatus = document.getElementById('authStatus');
+
+      configStatus.classList.add('active');
+
+      if (supabaseClient) {
+        try {
+          const { data } = await supabaseClient.auth.getSession();
+          authStatus.classList.toggle('active', !!data?.session);
+        } catch (err) {
+          console.error(err);
+        }
+      }
+    }
+
+    async function login() {
+      if (!initSupabase()) return;
+
+      try {
+        const { error } = await supabaseClient.auth.signInWithOAuth({
+          provider: 'google',
+          options: { redirectTo: window.location.href }
+        });
+
+        if (error) {
+          showError('Login error: ' + error.message);
+        }
+      } catch (err) {
+        showError('Login exception: ' + err.message);
+      }
+    }
+
+    async function fetchData() {
+      if (!supabaseClient) {
+        if (!initSupabase()) return;
+      }
+
+      const endpoint = document.getElementById('endpointSelect').value;
+      const config = endpointConfigs[endpoint];
+
+      if (!config) {
+        showError('Endpoint configuration not found');
+        return;
+      }
+
+      const inputs = {};
+      config.inputs.forEach((input) => {
+        const el = document.getElementById(input.id);
+        inputs[input.id] =
+          input.type === 'checkbox' ? el.checked : el.value || '';
+      });
+
+      const outputDiv = document.getElementById('output');
+      const requestPayloadPre = document.getElementById('requestPayload');
+      const jsonOutputPre = document.getElementById('jsonOutput');
+
+      // Clear previous outputs
+      requestPayloadPre.textContent = '...';
+      jsonOutputPre.textContent = 'Fetching...';
+
+      try {
+        const { data: sessionData } = await supabaseClient.auth.getSession();
+        const accessToken = sessionData?.session?.access_token;
+
+        if (!accessToken) {
+          showError('No access token found. Please login first.');
+          return;
+        }
+
+        const baseUrl = document.getElementById('supabaseUrl').value;
+        const requestConfig = await config.buildRequest(inputs);
+
+        // --- SHOW REQUEST PAYLOAD ---
+        if (requestConfig.body) {
+          try {
+            // Pretty print JSON body
+            const parsed = JSON.parse(requestConfig.body);
+            requestPayloadPre.textContent = JSON.stringify(parsed, null, 2);
+          } catch {
+            requestPayloadPre.textContent = requestConfig.body;
+          }
+        } else {
+          requestPayloadPre.textContent = "(No body)";
+        }
+
+        let url = `${baseUrl}/functions/v1/${endpoint}`;
+        if (requestConfig.queryParams) {
+          url += `?${requestConfig.queryParams}`;
+        }
+
+        const fetchOptions = {
+          method: config.method,
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'application/json'
+          }
+        };
+
+        if (requestConfig.body) {
+          fetchOptions.body = requestConfig.body;
+        }
+
+        const res = await fetch(url, fetchOptions);
+        const result = await res.json();
+
+        lastResult = result;
+
+        // Populate the raw JSON output area
+        jsonOutputPre.textContent = JSON.stringify(result, null, 2);
+
+        // Also call displayResults to render the nice HTML view below it
+        displayResults(result, endpoint);
+
+      } catch (err) {
+        showError('Fetch error: ' + err.message);
+        jsonOutputPre.textContent = "Error: " + err.message;
+      }
+    }
+
+    function displayResults(result, endpoint) {
+      const outputDiv = document.getElementById('output');
+      let html = '';
+
+      // Raw JSON section with pretty formatting
+      html += `
+        <div class="output-section">
+          <h3>📦 Raw Response</h3>
+          <pre class="json-output"><code>${escapeHtml(
+        JSON.stringify(result, null, 2)
+      )}</code></pre>
+        </div>
+      `;
+
+      if (endpoint === 'get_submodule_with_questions') {
+        if (result.submodule?.questions?.length) {
+          html += `<div class="output-section"><h3>📝 Questions (${result.submodule.questions.length})</h3>`;
+
+          result.submodule.questions.forEach((q, i) => {
+            html += `
+              <div class="question-card">
+                <div class="question-number">Question #${i + 1}</div>
+                <div class="question-text">${q.question_text || 'No question text'}</div>
+                <div class="passage">
+                  ${q.question_assets?.passage_text ||
+              '<span class="no-passage">❌ No passage text found</span>'
+              }
+                </div>
+              </div>
+            `;
+          });
+
+          html += '</div>';
+        } else {
+          html += '<div class="error">⚠️ No questions received in response</div>';
+        }
+      } else if (endpoint === 'auto_quiz') {
+        const questions = result.questions || (Array.isArray(result) ? result : []);
+        // Debug info
+        console.log("[Tester] AutoQuiz detected length:", questions.length, "IsArray:", Array.isArray(questions));
+
+        if (questions.length) {
+          html += `<div class="output-section"><h3>📝 Auto Quiz Questions (${questions.length})</h3>`;
+          questions.forEach((q, i) => {
+            html += `
+              <div class="question-card">
+                <div class="question-number">Question #${i + 1} (${q.question_type || 'unknown'})</div>
+                <div class="question-text">${q.question_text || 'No question text'}</div>
+                <div class="passage">
+                  <strong>ID:</strong> ${q.id}<br>
+                  <strong>Answer:</strong> ${typeof q.correct_answer === 'object' ? JSON.stringify(q.correct_answer) : q.correct_answer}<br>
+                  <strong>Explanation:</strong> ${q.explanation || 'N/A'}
+                </div>
+              </div>
+            `;
+          });
+          html += '</div>';
+        } else {
+          html += `<div class="error">
+            ⚠️ No questions received.<br>
+            Response keys: ${Object.keys(result).join(', ')}<br>
+            Result type: ${Array.isArray(result) ? 'Array' : typeof result}
+          </div>`;
+        }
+      } else if (
+        endpoint === 'get_analytics' ||
+        endpoint === 'get_analytics_subModule'
+      ) {
+        html += `
+          <div class="output-section">
+            <h3>📊 Analytics Summary</h3>
+        `;
+
+        if (result.stats) {
+          html += `
+            <div class="question-card">
+              <div class="question-text">Statistics</div>
+              <div class="passage">
+                <strong>Total Unique Questions:</strong> ${result.stats.totalUniqueQuestions || 0}<br>
+                <strong>Total Correct:</strong> ${result.stats.totalCorrect || 0}<br>
+                <strong>Total Incorrect:</strong> ${result.stats.totalIncorrect || 0}<br>
+                <strong>Attended:</strong> ${result.stats.attendedTotal || 0}<br>
+                <strong>Average Score:</strong> ${result.stats.averageScore || 0}%<br>
+                <strong>Final Accuracy:</strong> ${result.stats.finalAccuracy || 0}%<br>
+                <strong>Coverage:</strong> ${result.stats.coverage || 0}%<br>
+                <strong>Mastery:</strong> ${result.stats.mastery || 0}%<br>
+                <strong>Avg Time Spent:</strong> ${result.stats.avgTimeSpent || 0}s<br>
+                <strong>Total Time Spent:</strong> ${result.stats.totalTimeSpent || 0}s
+              </div>
+            </div>
+          `;
+        }
+
+        if (result.subjects?.length) {
+          html += `
+            <div class="question-card">
+              <div class="question-text">Subjects (${result.subjects.length})</div>
+              <div class="passage">
+          `;
+
+          result.subjects.forEach((s) => {
+            html += `
+              <strong>${s.subject_name}</strong><br>
+              Accuracy: ${s.finalAccuracy || 0}% |
+              Coverage: ${s.coverage || 0}% |
+              Attended: ${s.attendedTotal || 0}<br><br>
+            `;
+          });
+
+          html += `
+              </div>
+            </div>
+          `;
+        }
+
+        html += '</div>';
+      } else if (endpoint === 'subjects_list_by_grade') {
+        if (result.subjects?.length) {
+          html += `
+            <div class="output-section">
+              <h3>📚 Subjects (${result.subjects.length})</h3>
+              <div class="question-card">
+                <div class="question-text">User Grade: ${result.grade || 'Not set'}</div>
+                <div class="passage">
+          `;
+
+          result.subjects.forEach((s) => {
+            html += `<strong>${s.name}</strong><br>`;
+          });
+
+          html += `
+                </div>
+              </div>
+            </div>
+          `;
+        }
+      } else if (endpoint === 'getCourseDetails') {
+        if (result.modules?.length) {
+          html += `
+            <div class="output-section">
+              <h3>📖 Course: ${result.name || 'Unknown'}</h3>
+              <div class="question-card">
+                <div class="passage">
+                  <strong>Total Modules:</strong> ${result.modules.length}<br><br>
+          `;
+
+          result.modules.forEach((m) => {
+            html += `• ${m.name} (${m.submodules?.length || 0} submodules)<br>`;
+          });
+
+          html += `
+                </div>
+              </div>
+            </div>
+          `;
+        }
+      } else if (endpoint === 'get_submodules') {
+        if (result.subModules?.length) {
+          html += `
+            <div class="output-section">
+              <h3>📑 SubModules (${result.subModules.length})</h3>
+          `;
+
+          result.subModules.forEach((sm) => {
+            html += `
+              <div class="question-card">
+                <div class="question-text">${sm.name}</div>
+                <div class="passage">
+                  <strong>ID:</strong> ${sm.id}<br>
+                  <strong>Difficulty:</strong> ${sm.difficulty || 'N/A'}<br>
+                  <strong>Pro:</strong> ${sm.is_pro ? 'Yes' : 'No'}
+                </div>
+              </div>
+            `;
+          });
+
+          html += '</div>';
+        }
+      }
+
+      outputDiv.innerHTML = html;
+    }
+
+    function showError(message) {
+      const outputDiv = document.getElementById('output');
+      outputDiv.innerHTML = `<div class="error">❌ ${message}</div>`;
+      console.error(message);
+    }
+
+    function clearOutput() {
+      document.getElementById('output').innerHTML =
+        '<p style="color: #6c757d; text-align: center;">Click "Fetch Data" to load data</p>';
+      lastResult = null;
+    }
+
+    async function copyResult() {
+      if (!lastResult) {
+        showError('No result to copy. Fetch data first.');
+        return;
+      }
+
+      try {
+        await navigator.clipboard.writeText(
+          JSON.stringify(lastResult, null, 2)
+        );
+
+        const btn = document.getElementById('copyBtn');
+        const orig = btn.textContent;
+
+        btn.textContent = '✅ Copied!';
+        btn.classList.add('copied');
+
+        setTimeout(() => {
+          btn.textContent = orig;
+          btn.classList.remove('copied');
+        }, 2000);
+      } catch (err) {
+        showError('Failed to copy: ' + err.message);
+      }
+    }
+
+    // Simple HTML escaper for JSON inside <code>
+    function escapeHtml(str) {
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    }
+  </script>
+</body>
+
+</html>

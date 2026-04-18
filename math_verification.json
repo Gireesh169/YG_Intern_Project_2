@@ -1,0 +1,49 @@
+{
+    "grade": "10",
+    "subject": "Mathematics",
+    "textbookRef": "Math Verification",
+    "chapterNumber": 1,
+    "chapterName": "Math Rendering Test",
+    "questions": [
+        {
+            "questionType": "fillblanks",
+            "difficulty": "easy",
+            "questionText": "The fraction representing half is written as ___.",
+            "blanks": [
+                "\\frac{1}{2}"
+            ]
+        },
+        {
+            "questionType": "fillblanks",
+            "difficulty": "medium",
+            "questionText": "The area of a circle is given by A = ___.",
+            "blanks": [
+                "pi*r^2"
+            ]
+        },
+        {
+            "questionType": "fillblanks",
+            "difficulty": "medium",
+            "questionText": "The quadratic formula involves the square root term: ___.",
+            "blanks": [
+                "sqrt(b^2-4ac)"
+            ]
+        },
+        {
+            "questionType": "fillblanks",
+            "difficulty": "hard",
+            "questionText": "Simplify: (x^2)^3 = ___.",
+            "blanks": [
+                "x^6"
+            ]
+        },
+        {
+            "questionType": "fillblanks",
+            "difficulty": "hard",
+            "questionText": "In trigonometry, ___ is the ratio of opposite to hypotenuse.",
+            "blanks": [
+                "sin(theta)"
+            ]
+        }
+    ]
+}
